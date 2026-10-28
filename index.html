@@ -83,5 +83,26 @@
     </iframe>
   </main>
 
+  <!-- Auto Landscape / Fullscreen Assistant for Mobile Browsers -->
+  <script>
+    function triggerLandscapeMode() {
+      try {
+        var doc = document.documentElement;
+        var req = doc.requestFullscreen || doc.webkitRequestFullscreen || doc.mozRequestFullScreen || doc.msRequestFullscreen;
+        if (req && !document.fullscreenElement) {
+          req.call(doc).then(function() {
+            if (screen.orientation && screen.orientation.lock) {
+              screen.orientation.lock('landscape').catch(function() {});
+            }
+          }).catch(function() {});
+        } else if (screen.orientation && screen.orientation.lock) {
+          screen.orientation.lock('landscape').catch(function() {});
+        }
+      } catch (err) {}
+    }
+
+    window.addEventListener('click', triggerLandscapeMode, { once: true });
+    window.addEventListener('touchstart', triggerLandscapeMode, { once: true });
+  </script>
 </body>
 </html>
